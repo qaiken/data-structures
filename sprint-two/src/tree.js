@@ -1,8 +1,6 @@
 var Tree = function(value){
   var newTree = {};
   newTree.value = value;
-
-  // your code here
   newTree.children = [];
 
   _.extend(newTree,treeMethods);
@@ -13,19 +11,29 @@ var Tree = function(value){
 var treeMethods = {};
 
 treeMethods.addChild = function(value){
-  this.children.push(Tree(value));
+  // create new tree node with value
+  var newTree = Tree(value);
+
+  // push to tree instance
+  this.children.push(newTree);
 };
 
 treeMethods.contains = function(target){
-
-  var searchNodes = function(node) {
-    if( node.value === target ) {
+  // function that checknode's value
+  var checkNodeValue = function (node) {
+    // if the node's value === target
+    if (node.value === target) {
       return true;
     }
-    if( node.children ) {
-      for(var i=0; i < node.children.length; ++i) {
-        if( searchNodes(node.children[i]) ) {
+
+    // else if it has children
+    if (node.children) {
+      // for each of those children, we'll pass each node into the checknode function
+      for (var i = 0; i < node.children.length; i++) {
+        // if any of these return true
+        if( checkNodeValue(node.children[i]) ) {
           return true;
+          // return true
         }
       }
     }
@@ -33,11 +41,5 @@ treeMethods.contains = function(target){
     return false;
   };
 
-  return searchNodes(this);
-
+  return checkNodeValue(this);
 };
-
-
-/*
- * Complexity: What is the time complexity of the above functions?
- */

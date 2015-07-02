@@ -26,13 +26,12 @@ var LinkedList = function(){
     if (!this.head) {
       return;
     }
-    // else cache the head's value
+    // else cache the head's next
     var currHeadVal = this.head.value;
 
-    // set head to head.next
+    // set head to cached node
     this.head = this.head.next;
 
-    // return head's cached value
     return currHeadVal;
   };
 
@@ -45,11 +44,12 @@ var LinkedList = function(){
       if( node.value === target ) {
         return true;
       }
+
       if(node.next) {
         return checkNodeValue(node.next);
-      } else {
-        return false;
       }
+
+      return false;
     };
 
     return checkNodeValue(this.head);
