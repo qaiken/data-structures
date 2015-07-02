@@ -27,13 +27,12 @@ var LinkedList = function(){
       return;
     }
     // else cache the head's next
-    var currHead = this.head;
-    var nextHead = currHead.next;
+    var currHeadVal = this.head.value;
 
     // set head to cached node
-    this.head = nextHead;
+    this.head = this.head.next;
 
-    return currHead.value;
+    return currHeadVal;
   };
 
   list.contains = function(target){
@@ -41,6 +40,19 @@ var LinkedList = function(){
     //   check if node.value === target, return true
     //   if node.next !== null, call it again
     //   else return false
+    var checkNodeValue = function(node) {
+      if( node.value === target ) {
+        return true;
+      }
+
+      if(node.next) {
+        return checkNodeValue(node.next);
+      }
+
+      return false;
+    };
+
+    return checkNodeValue(this.head);
   };
 
   return list;
