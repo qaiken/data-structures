@@ -7,9 +7,38 @@ var LinkedList = function(){
   };
 
   list.removeHead = function(){
+    // if no head, return
+    if (!this.head) {
+      return;
+    }
+    // else cache the head's value
+    var currHeadVal = this.head.value;
+
+    // set head to head.next
+    this.head = this.head.next;
+
+    // return head's cached value
+    return currHeadVal;
   };
 
   list.contains = function(target){
+    // checkNodeValue - recursive, accepts node
+    //   check if node.value === target, return true
+    //   if node.next !== null, call it again
+    //   else return false
+
+    var checkNodeValue = function(node) {
+      if( node.value === target ) {
+        return true;
+      }
+      if(node.next) {
+        return checkNodeValue(node.next);
+      } else {
+        return false;
+      }
+    };
+
+    return checkNodeValue(this.head);
   };
 
   return list;
