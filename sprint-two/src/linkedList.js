@@ -4,6 +4,21 @@ var LinkedList = function(){
   list.tail = null;
 
   list.addToTail = function(value){
+    // create Node(value)
+    var node = Node(value);
+
+    // if this.head === null set this.head = Node(value)
+    if (!this.head) {
+      this.head = node;
+    }
+
+    // if this.tail exists, set this.tail's next to Node(value)
+    if (this.tail) {
+      this.tail.next = node;
+    }
+
+    // set list's tail to Node(value)
+    this.tail = node;
   };
 
   list.removeHead = function(){
@@ -26,7 +41,6 @@ var LinkedList = function(){
     //   check if node.value === target, return true
     //   if node.next !== null, call it again
     //   else return false
-
     var checkNodeValue = function(node) {
       if( node.value === target ) {
         return true;
