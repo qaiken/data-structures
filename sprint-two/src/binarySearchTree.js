@@ -9,29 +9,47 @@ var BinarySearchTree = function(value){
 };
 
 BinarySearchTree.prototype.insert = function (newValue) {
-  var assignNextNode = function (node, value) {
-    if ( value < node.value && !node.left ) {
-      return node.left = BinarySearchTree(value);
+  if ( newValue < this.value ) {
+    if(this.left) {
+      this.insert.call(this.left,newValue);
     } else {
-      assignNextNode(node.left,value);
+      this.left = BinarySearchTree(newValue);
     }
-
-    if ( value > node.value && !node.right ) {
-      return node.right = BinarySearchTree(value);
+  } else {
+    if(this.right) {
+      this.insert.call(this.right,newValue);
     } else {
-      assignNextNode(node.right,value);
+      this.right = BinarySearchTree(newValue);
     }
-  };
-
-  assignNextNode(this, newValue);
+  }
 };
 
-BinarySearchTree.prototype.contains = function () {
+BinarySearchTree.prototype.contains = function (value) {
+  if (this.value === value) {
+    return true;
+  }
 
+  if (value < this.value && this.left && this.contains.call(this.left, value)) {
+    return true;
+  }
+
+  if (value > this.value && this.right && this.contains.call(this.right, value)) {
+    return true;
+  }
+
+  return false;
 };
 
-BinarySearchTree.prototype.depthFirstLog = function () {
+BinarySearchTree.prototype.depthFirstLog = function (cb) {
+  cb(this.value);
 
+  if (this.left) {
+    this.depthFirstLog.call(this.left, cb);
+  }
+
+  if (this.right) {
+    this.depthFirstLog.call(this.right, cb);
+  }
 };
 
 
