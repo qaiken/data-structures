@@ -7,13 +7,10 @@ var LinkedList = function(){
     // create Node(value)
     var node = Node(value);
 
-    // if this.head === null set this.head = Node(value)
     if (!this.head) {
       this.head = node;
-    }
-
-    // if this.tail exists, set this.tail's next to Node(value)
-    if (this.tail) {
+    } else {
+      // this also updates the head.next chain
       this.tail.next = node;
     }
 
