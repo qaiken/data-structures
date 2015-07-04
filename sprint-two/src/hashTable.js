@@ -5,10 +5,20 @@ var HashTable = function(){
 
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit),
-      currVal = this._storage.get(i);
+      currBucket = this._storage.get(i),
+      isKeyInBucket = false;
 
-  if (currVal) {
-    currVal.push([k, v]);
+  if (currBucket) {
+    isKeyInBucket = _.some(currBucket, function (currArray) {
+      if (currArray[0] === k) {
+        currArray[1] = v;
+        return true;
+      }
+    });
+
+    if (!isKeyInBucket) {
+      currBucket.push([k, v]);
+    }
   } else {
     this._storage.set(i, [[k, v]]);
   }
