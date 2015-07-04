@@ -12,9 +12,7 @@ describe('tree', function() {
   });
 
   it('disassociate the tree with its parent (in both directions)', function() {
-    tree.addChild(5);
-    tree.addChild(6);
-    tree.addChild(7);
+    tree.addChild(5).addChild(6).addChild(7);
     var removedChild = tree.children[2].removeFromParent();
     expect(removedChild.parent).to.equal(null);
     expect(tree.children.length).to.equal(2);

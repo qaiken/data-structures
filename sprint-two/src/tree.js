@@ -18,6 +18,8 @@ treeMethods.addChild = function(value){
 
   // push to tree instance
   this.children.push(newTree);
+
+  return this;
 };
 
 treeMethods.removeFromParent = function() {
