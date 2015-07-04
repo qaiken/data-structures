@@ -5,8 +5,8 @@ var HashTable = function(){
 
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit),
-      currBucket = this._storage.get(i),
-      isKeyInBucket = false;
+    currBucket = this._storage.get(i),
+    isKeyInBucket = false;
 
   if (currBucket) {
     isKeyInBucket = _.some(currBucket, function (currArray) {
@@ -24,13 +24,18 @@ HashTable.prototype.insert = function(k, v){
   }
 };
 
-HashTable.prototype.retrieve = function(k){
+HashTable.prototype.retrieve = function(k,remove){
   var i = getIndexBelowMaxForKey(k, this._limit),
-      result;
+    currBucket = this._storage.get(i),
+    result = null;
 
-  _.each(this._storage.get(i), function (currArr) {
+  _.some(currBucket, function (currArr,i) {
     if (currArr[0] === k) {
       result = currArr[1];
+      if(remove) {
+        currBucket.splice(i,1);
+      }
+      return true;
     }
   });
 
@@ -38,7 +43,7 @@ HashTable.prototype.retrieve = function(k){
 };
 
 HashTable.prototype.remove = function(k){
-  this.insert(k,null);
+  return this.retrieve(k,true);
 };
 
 
