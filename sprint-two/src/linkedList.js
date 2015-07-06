@@ -33,26 +33,23 @@ var LinkedList = function(){
   };
 
   list.contains = function(target){
-    // checkNodeValue - recursive, accepts node
-    //   check if node.value === target, return true
-    //   if node.next !== null, call it again
-    //   else return false
-    var checkNodeValue = function(node) {
+    var node = this.head;
+
+    while(node) {
+    
       if( node.value === target ) {
         return true;
       }
 
-      if(node.next) {
-        return checkNodeValue(node.next);
-      }
+      node = node.next;
 
-      return false;
-    };
+    }
 
-    return checkNodeValue(this.head);
+    return false;
   };
 
   return list;
+
 };
 
 var Node = function(value){

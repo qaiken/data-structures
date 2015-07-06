@@ -11,13 +11,13 @@ var BinarySearchTree = function(value){
 BinarySearchTree.prototype.insert = function (newValue) {
   if ( newValue < this.value ) {
     if(this.left) {
-      this.insert.call(this.left,newValue);
+      this.left.insert(newValue);
     } else {
       this.left = BinarySearchTree(newValue);
     }
   } else {
     if(this.right) {
-      this.insert.call(this.right,newValue);
+      this.right.insert(newValue);
     } else {
       this.right = BinarySearchTree(newValue);
     }
@@ -29,11 +29,11 @@ BinarySearchTree.prototype.contains = function (value) {
     return true;
   }
 
-  if (value < this.value && this.left && this.contains.call(this.left, value)) {
+  if (value < this.value && this.left && this.left.contains(value)) {
     return true;
   }
 
-  if (value > this.value && this.right && this.contains.call(this.right, value)) {
+  if (value > this.value && this.right && this.right.contains(value)) {
     return true;
   }
 
@@ -44,11 +44,11 @@ BinarySearchTree.prototype.depthFirstLog = function (cb) {
   cb(this.value);
 
   if (this.left) {
-    this.depthFirstLog.call(this.left, cb);
+    this.left.depthFirstLog(cb);
   }
 
   if (this.right) {
-    this.depthFirstLog.call(this.right, cb);
+    this.right.depthFirstLog(cb);
   }
 };
 

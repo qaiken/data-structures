@@ -4,11 +4,9 @@ var doublyLinkedList = function(){
   list.tail = null;
 
   list.addToTail = function(value){
-    // create Node(value)
     var oldTail = null;
     var node = Node(value);
 
-    // if this.head === null set this.head = Node(value)
     if (!this.head) {
       this.head = node;
     } else {
@@ -16,7 +14,6 @@ var doublyLinkedList = function(){
       oldTail.next = node;
     }
 
-    // set list's tail to Node(value)
     this.tail = node;
     this.tail.previous = oldTail;
   };
@@ -32,61 +29,58 @@ var doublyLinkedList = function(){
       oldHead.previous = node;
     }
 
-    // set list's tail to Node(value)
     this.head = node;
     this.head.next = oldHead;
   };
 
   list.removeHead = function(){
-    // if no head, return
     if (!this.head) {
       return;
     }
-    // else cache the head's next
+
     var currHeadVal = this.head.value;
 
-    // set head to cached node
     this.head = this.head.next;
+
+    if(this.head) {
+      this.head.previous = null;
+    }
 
     return currHeadVal;
   };
 
   list.removeTail = function() {
-    // if no tail, return
     if (!this.tail) {
       return;
     }
 
+    var currTailVal = this.tail.value;
+
     this.tail = this.tail.previous;
-    this.tail.next = null;
 
-    // // else cache the head's next
-    // var currHeadVal = this.head.value;
+    if(this.tail) {
+      this.tail.next = null;
+    }
 
-    // // set head to cached node
-    // this.head = this.head.next;
-
-    // return currHeadVal;
+    return currTailVal;
   };
 
   list.contains = function(target){
-    // checkNodeValue - recursive, accepts node
-    //   check if node.value === target, return true
-    //   if node.next !== null, call it again
-    //   else return false
-    var checkNodeValue = function(node) {
+
+    var node = this.head;
+
+    while(node) {
+    
       if( node.value === target ) {
         return true;
       }
 
-      if(node.next) {
-        return checkNodeValue(node.next);
-      }
+      node = node.next;
 
-      return false;
-    };
+    }
 
-    return checkNodeValue(this.head);
+    return false;
+
   };
 
   return list;
