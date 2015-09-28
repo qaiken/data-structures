@@ -1,38 +1,72 @@
-var LinkedList = function(){
+var doublyLinkedList = function(){
   var list = {};
   list.head = null;
   list.tail = null;
 
   list.addToTail = function(value){
-    // create Node(value)
+    var oldTail = null;
     var node = Node(value);
 
     if (!this.head) {
       this.head = node;
     } else {
-      // this also updates the head.next chain
-      this.tail.next = node;
+      oldTail = this.tail;
+      oldTail.next = node;
     }
 
-    // set list's tail to Node(value)
     this.tail = node;
+    this.tail.previous = oldTail;
+  };
+
+  list.addToHead = function(value) {
+    var oldHead = null;
+    var node = Node(value);
+
+    if (!this.tail) {
+      this.tail = node;
+    } else {
+      oldHead = this.head;
+      oldHead.previous = node;
+    }
+
+    this.head = node;
+    this.head.next = oldHead;
   };
 
   list.removeHead = function(){
-    // if no head, return
     if (!this.head) {
       return;
     }
-    // else cache the head's next
+
     var currHeadVal = this.head.value;
 
-    // set head to cached node
     this.head = this.head.next;
+
+    if(this.head) {
+      this.head.previous = null;
+    }
 
     return currHeadVal;
   };
 
+  list.removeTail = function() {
+    if (!this.tail) {
+      return;
+    }
+
+    var currTailVal = this.tail.value;
+
+    this.tail = this.tail.previous;
+
+    if(this.tail) {
+      this.tail.next = null;
+    }
+
+    return currTailVal;
+  };
+
   list.contains = function(target){
+
     var node = this.head;
 
     while(node) {
@@ -46,10 +80,10 @@ var LinkedList = function(){
     }
 
     return false;
+
   };
 
   return list;
-
 };
 
 var Node = function(value){
@@ -57,6 +91,7 @@ var Node = function(value){
 
   node.value = value;
   node.next = null;
+  node.previous = null;
 
   return node;
 };

@@ -1,18 +1,18 @@
-
-
 var Graph = function(){
 };
 
 Graph.prototype.addNode = function(node) {
-  // create new node with value, id, edges
   this[node] = [];
 };
 
 Graph.prototype.contains = function(node) {
-  return !!this[node];
+  return !(this[node] === undefined);
 };
 
 Graph.prototype.removeNode = function(node) {
+  for(var i = 0; i < this[node].length; ++i) {
+    this.removeEdge(node,this[node][i]);
+  }
   delete this[node];
 };
 
@@ -21,6 +21,9 @@ Graph.prototype.hasEdge = function(fromNode, toNode){
 };
 
 Graph.prototype.addEdge = function(fromNode, toNode) {
+  if( _.indexOf(this[fromNode],toNode) !== -1 && _.indexOf(this[toNode],fromNode) !== -1 ) {
+    return;
+  }
   this[fromNode].push(toNode);
   this[toNode].push(fromNode);
 };
